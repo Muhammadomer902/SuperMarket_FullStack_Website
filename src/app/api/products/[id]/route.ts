@@ -2,18 +2,32 @@ import { getAuthSession } from "@/utils/auth";
 import { prisma } from "@/utils/connect";
 import { NextRequest, NextResponse } from "next/server";
 
-
 // GET SINGLE PRODUCT
-export const GET = async (req: NextRequest,{ params }: { params: { id: string } }) => {
-  const { id } = params;
+export const GET = async (req: NextRequest) => {
+  // Extract 'id' from the URL path
+  const { pathname } = req.nextUrl;
+  const id = pathname.split('/').pop(); // Extracts the id from the URL
+
+  if (!id) {
+    return new NextResponse(
+      JSON.stringify({ message: "Product ID is required!" }),
+      { status: 400 }
+    );
+  }
 
   try {
     const product = await prisma.product.findUnique({
-      where: {
-        id: id,
-      }
+      where: { id: id },
     });
-    return new NextResponse(JSON.stringify(product),{ status: 200 });
+
+    if (!product) {
+      return new NextResponse(
+        JSON.stringify({ message: "Product not found!" }),
+        { status: 404 }
+      );
+    }
+
+    return new NextResponse(JSON.stringify(product), { status: 200 });
   } catch (err) {
     console.log(err);
     return new NextResponse(
@@ -24,18 +38,28 @@ export const GET = async (req: NextRequest,{ params }: { params: { id: string } 
 };
 
 // DELETE SINGLE PRODUCT
-export const DELETE = async (req: NextRequest,{ params }: { params: { id: string } }) => {
-  const { id } = params;
-  const session = await getAuthSession(); 
+export const DELETE = async (req: NextRequest) => {
+  // Extract 'id' from the URL path
+  const { pathname } = req.nextUrl;
+  const id = pathname.split('/').pop(); // Extracts the id from the URL
 
-  if(session?.user.isAdmin){
+  if (!id) {
+    return new NextResponse(
+      JSON.stringify({ message: "Product ID is required!" }),
+      { status: 400 }
+    );
+  }
+
+  const session = await getAuthSession();
+
+  if (session?.user.isAdmin) {
     try {
       await prisma.product.delete({
-        where: {
-          id: id,
-        }
+        where: { id: id },
       });
-      return new NextResponse(JSON.stringify("Product has been Deleted"),{ status: 200 });
+      return new NextResponse(JSON.stringify("Product has been deleted"), {
+        status: 200,
+      });
     } catch (err) {
       console.log(err);
       return new NextResponse(
@@ -44,14 +68,25 @@ export const DELETE = async (req: NextRequest,{ params }: { params: { id: string
       );
     }
   }
+
   return new NextResponse(
-    JSON.stringify({ message: "You are not Allowed" }),
+    JSON.stringify({ message: "You are not allowed" }),
     { status: 403 }
   );
 };
-//FEATURE SINGLE PRODUCT
-export const PATCH = async (req: NextRequest, { params }: { params: { id: string } }) => {
-  const { id } = params;
+
+// FEATURE SINGLE PRODUCT
+export const PATCH = async (req: NextRequest) => {
+  // Extract 'id' from the URL path
+  const { pathname } = req.nextUrl;
+  const id = pathname.split('/').pop(); // Extracts the id from the URL
+
+  if (!id) {
+    return new NextResponse(
+      JSON.stringify({ message: "Product ID is required!" }),
+      { status: 400 }
+    );
+  }
 
   try {
     // Find the current product
