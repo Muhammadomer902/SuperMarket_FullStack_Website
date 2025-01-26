@@ -4,11 +4,17 @@ import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
+export async function POST(request: NextRequest) {
+  
+  const { pathname } = request.nextUrl;
+  const id = pathname.split('/').pop();
+
+  if (!id) {
+    return new NextResponse(
+      JSON.stringify({ message: "Order ID is required!" }),
+      { status: 400 }
+    );
+  }
 
   const order = await prisma.order.findUnique({
     where: { id },
