@@ -14,7 +14,13 @@ const getProducts = async (category: string) => {
   return res.json();
 };
 
-const CategoryPage = async ({ params }: { params: { category: string } }) => {
+interface CategoryPageProps {
+    params: {
+      category: string;
+    };
+  }
+  
+const CategoryPage = async ({ params }: CategoryPageProps) => {
   const products: ProductType[] = await getProducts(params.category);
 
   return (
