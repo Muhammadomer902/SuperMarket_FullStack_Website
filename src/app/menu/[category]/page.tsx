@@ -1,10 +1,10 @@
-import React, { JSX } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ProductType } from "@/types/types";
 
 // Fetch products based on category
-const getProducts = async (category: string): Promise<ProductType[]> => {
+const getProducts = async (category: string) => {
   const res = await fetch(`http://localhost:3000/api/products?cat=${category}`, { cache: "no-store" });
 
   if (!res.ok) {
@@ -14,8 +14,11 @@ const getProducts = async (category: string): Promise<ProductType[]> => {
   return res.json();
 };
 
-// Category page component with Promise<any> return type
-const CategoryPage = async ({ params }: { params: { category: string } }): Promise<JSX.Element> => {
+type Params = {
+  params: { category: string };
+};
+
+const CategoryPage = async ({ params }: Params) => {
   const products: ProductType[] = await getProducts(params.category);
 
   return (
