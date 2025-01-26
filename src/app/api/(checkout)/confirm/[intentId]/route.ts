@@ -1,8 +1,17 @@
 import { prisma } from "@/utils/connect";
 import { NextRequest, NextResponse } from "next/server";
 
-export const PUT = async (request: NextRequest, { params }: { params: { intentId: string } }) => {
-  const { intentId } = params;
+export const PUT = async (request: NextRequest) => {
+
+  const { searchParams } = request.nextUrl;
+  const intentId = searchParams.get('intentId');
+
+  if (!intentId) {
+    return new NextResponse(
+      JSON.stringify({ message: "Intent ID is required!" }),
+      { status: 400 }
+    );
+  }
 
   try {
     await prisma.order.update({
