@@ -1,10 +1,17 @@
 import { prisma } from "@/utils/connect";
 import { NextRequest, NextResponse } from "next/server";
 
-
 // CHANGE THE STATUS OF AN ORDER
-export const PUT = async (req: NextRequest,{ params }: { params: { id: string } }) => {
-  const { id } = params;
+export const PUT = async (req: NextRequest) => {
+  const { pathname } = req.nextUrl;
+  const id = pathname.split('/').pop(); 
+
+  if (!id) {
+    return new NextResponse(
+      JSON.stringify({ message: "Order ID is required!" }),
+      { status: 400 }
+    );
+  }
 
   try {
     const body = await req.json();
@@ -13,8 +20,9 @@ export const PUT = async (req: NextRequest,{ params }: { params: { id: string } 
       where: {
         id: id,
       },
-      data: { status: body },
+      data: { status: body.status }, 
     });
+
     return new NextResponse(
       JSON.stringify({ message: "Order has been updated!" }),
       { status: 200 }
