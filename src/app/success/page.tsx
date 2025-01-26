@@ -1,27 +1,33 @@
-"use client";
+'use client';
 
-import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const SuccessPage = () => {
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const payment_intent = searchParams.get("payment_intent");
+
+  // Suspense boundary wrapping `useSearchParams`
+  const SearchParamsSuspenseWrapper = () => {
+    const searchParams = useSearchParams();
+    const payment_intent = searchParams.get('payment_intent');
+    return payment_intent;
+  };
 
   useEffect(() => {
     setIsClient(true); // Runs only on the client side
   }, []);
 
   useEffect(() => {
+    const payment_intent = SearchParamsSuspenseWrapper();
     if (payment_intent && isClient) {
       const makeRequest = async () => {
         try {
           await fetch(`http://localhost:3000/api/confirm/${payment_intent}`, {
-            method: "PUT",
+            method: 'PUT',
           });
           setTimeout(() => {
-            router.push("/orders");
+            router.push('/orders');
           }, 5000);
         } catch (err) {
           console.log(err);
@@ -30,7 +36,7 @@ const SuccessPage = () => {
 
       makeRequest();
     }
-  }, [payment_intent, router, isClient]);
+  }, [isClient, router]);
 
   if (!isClient) {
     return <p>Loading ... </p>; // Prevent render during SSR
@@ -45,4 +51,10 @@ const SuccessPage = () => {
   );
 };
 
-export default SuccessPage;
+export default function SuccessPageWithSuspense() {
+  return (
+    <Suspense fallback={<p>Loading search params...</p>}>
+      <SuccessPage />
+    </Suspense>
+  );
+}
