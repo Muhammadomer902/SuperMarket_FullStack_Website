@@ -14,12 +14,9 @@ const getProducts = async (category: string) => {
   return res.json();
 };
 
-type Params = {
-  params: { category: string };
-};
-
-const CategoryPage = async ({ params }: Params) => {
-  const products: ProductType[] = await getProducts(params.category);
+const CategoryPage = async ({ params }: {params: Promise<{ category: string }> }) => {
+  const {category} = await params
+  const products: ProductType[] = await getProducts(category);
 
   return (
     <div className="flex flex-wrap text-sky-800">
