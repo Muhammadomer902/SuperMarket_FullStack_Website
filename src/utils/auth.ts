@@ -6,14 +6,14 @@ import { prisma } from "./connect";
 declare module "next-auth"{
   interface Session{
     user: User &{
-      isAdmin:Boolean
+      isAdmin:boolean
     };
   }
 }
 
 declare module "next-auth/jwt"{
   interface JWT{
-    isAdmin:Boolean
+    isAdmin:boolean
   }
 }
 

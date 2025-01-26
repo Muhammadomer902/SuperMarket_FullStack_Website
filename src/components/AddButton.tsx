@@ -1,14 +1,10 @@
 "use client"
 import { useSession } from "next-auth/react";
-import Image from "next/image"
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
 
 const AddButton = () => {
 
     const { data: session, status } = useSession();
-    const router = useRouter();
 
     if (status === "loading") {
         return <p>Loading...</p>;

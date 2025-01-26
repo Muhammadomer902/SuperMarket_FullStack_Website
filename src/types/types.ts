@@ -23,7 +23,7 @@ export type ProductType = {
     products: CartItemType[];
     status: string;
     createdAt: Date;
-    intent_id?: String;
+    intent_id?: string;
   };
 
   export type CartItemType = {

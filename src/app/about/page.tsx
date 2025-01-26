@@ -35,7 +35,7 @@ const about = () => {
       <section className="mb-16">
         <h2 className="text-2xl font-semibold text-sky-700 mb-4">Our Team</h2>
         <p className="text-gray-700 leading-relaxed">
-          Behind every success, there's a passionate and dedicated team. Our team
+          Behind every success, there&#39;s a passionate and dedicated team. Our team
           consists of talented individuals who bring diverse expertise and a
           shared commitment to achieving our goals. Together, we foster an
           environment of collaboration and continuous learning.

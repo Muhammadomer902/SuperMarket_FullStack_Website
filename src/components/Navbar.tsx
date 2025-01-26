@@ -6,9 +6,6 @@ import CartIcon from "./CartIcon";
 import UserLinks from "./UserLinks";
 
 const NavBar = () => {
-    
-    //Temp
-    const user = false;
 
     return (
         <div className="bg-sky-400 text-white h-12 p-4 flex justify-between items-center border-b-2 border-b-sky-600 uppercase">

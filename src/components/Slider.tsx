@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link';
 
 const slides = [
   { id: 1, title: "anything, anytime, anywhere!", image: "/temporary/slide1.jpeg" },
@@ -26,7 +27,7 @@ const Slider = () => {
         <h1 className='text-4xl text-center uppercase p-4 md:p-10 md:text-5xl xl:text-6xl'>
           {slides[currentSlide].title}
         </h1>
-        <a href='/menu'><button className='bg-sky-500 text-white py-4 px-8'>Order Now</button></a>
+        <Link href='/menu'><button className='bg-sky-500 text-white py-4 px-8'>Order Now</button></Link>
       </div>
       {/* Image Slider */}
       <div className='w-full relative flex-1'>
