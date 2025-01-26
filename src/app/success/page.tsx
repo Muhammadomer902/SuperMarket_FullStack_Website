@@ -1,27 +1,22 @@
-"use client";
+'use client';
 
-import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect } from 'react';
 
-const SuccessPage = () => {
-  const [isClient, setIsClient] = useState(false);
+const SuccessPageContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const payment_intent = searchParams.get("payment_intent");
+  const payment_intent = searchParams.get('payment_intent');
 
   useEffect(() => {
-    setIsClient(true); // Runs only on the client side
-  }, []);
-
-  useEffect(() => {
-    if (payment_intent && isClient) {
+    if (payment_intent) {
       const makeRequest = async () => {
         try {
           await fetch(`http://localhost:3000/api/confirm/${payment_intent}`, {
-            method: "PUT",
+            method: 'PUT',
           });
           setTimeout(() => {
-            router.push("/orders");
+            router.push('/orders');
           }, 5000);
         } catch (err) {
           console.log(err);
@@ -30,11 +25,7 @@ const SuccessPage = () => {
 
       makeRequest();
     }
-  }, [payment_intent, router, isClient]);
-
-  if (!isClient) {
-    return <p>Loading ... </p>; // Prevent render during SSR
-  }
+  }, [payment_intent, router]);
 
   return (
     <div className="min-h-[calc(100vh-6rem)] md:min-h-[calc(100vh-15rem)] flex items-center justify-center text-center text-2xl text-green-700">
@@ -45,4 +36,11 @@ const SuccessPage = () => {
   );
 };
 
-export default SuccessPage;
+// Wrapper component that handles Suspense and fallback UI
+export function SuccessPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SuccessPageContent />
+    </Suspense>
+  );
+}
