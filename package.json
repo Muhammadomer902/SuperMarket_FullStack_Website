@@ -24,7 +24,6 @@
     "next-images": "^1.8.5",
     "pg": "^8.13.1",
     "react": "^19.0.0",
-    "react-confetti-explosion": "^2.1.2",
     "react-countdown": "^2.3.6",
     "react-dom": "^19.0.0",
     "react-toastify": "^11.0.3",

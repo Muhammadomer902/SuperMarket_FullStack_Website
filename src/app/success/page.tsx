@@ -1,7 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
-import ConfettiExplosion from "react-confetti-explosion";
 
 const SuccessPage = () => {
   const router = useRouter();
@@ -32,8 +31,6 @@ const SuccessPage = () => {
           Payment successful. You are being redirected to the orders page.
           Please do not close the page.
         </p>
-      <ConfettiExplosion className="absolute m-auto"
-      />
       </div>
     </>
   );
