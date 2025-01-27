@@ -18,7 +18,7 @@ const FeatureButton = ({id}: {id:string}) => {
 
       const handleFeatured = async () => {
         try {
-          const res = await fetch(`http://localhost:3000/api/products/${id}`, { method: "PATCH" });
+          const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/products/${id}`, { method: "PATCH" });
       
           if (res.status === 200) {
             const data = await res.json();

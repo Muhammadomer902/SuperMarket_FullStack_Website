@@ -17,7 +17,7 @@ const PayPage = ({ params }: { params: Promise<{ id: string }> }) => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/create-intent/${id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/create-intent/${id}`, {
           method: "POST",
         });
         const data = await res.json();

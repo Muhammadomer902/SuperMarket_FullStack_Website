@@ -23,7 +23,7 @@ const SuccessPage = () => {
     if (payment_intent && isClient) {
       const makeRequest = async () => {
         try {
-          await fetch(`http://localhost:3000/api/confirm/${payment_intent}`, {
+          await fetch(`${process.env.NEXT_PUBLIC_URL}/api/confirm/${payment_intent}`, {
             method: 'PUT',
           });
           setTimeout(() => {

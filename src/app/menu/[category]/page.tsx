@@ -5,7 +5,7 @@ import { ProductType } from "@/types/types";
 
 // Fetch products based on category
 const getProducts = async (category: string) => {
-  const res = await fetch(`http://localhost:3000/api/products?cat=${category}`, { cache: "no-store" });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/products?cat=${category}`, { cache: "no-store" });
 
   if (!res.ok) {
     throw new Error("Failed!");
