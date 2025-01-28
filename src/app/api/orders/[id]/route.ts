@@ -15,12 +15,11 @@ export const PUT = async (req: NextRequest) => {
 
   try {
     const body = await req.json();
-
     await prisma.order.update({
       where: {
         id: id,
       },
-      data: { status: body.status }, 
+      data: { status: body }, 
     });
 
     return new NextResponse(
