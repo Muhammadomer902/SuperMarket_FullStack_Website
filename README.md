@@ -1,3 +1,7 @@
+It is a Full stack website made using Next.js, TypeScript, Postgresql, Tailwind and Prisma
+
+To visit the website you can go to:- https://supermarket-rose.vercel.app/ 
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
